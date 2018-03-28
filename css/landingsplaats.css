@@ -6,6 +6,10 @@
         height: 80%;
 }
 
+body{
+	background-color: #09046a;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -15,5 +19,17 @@ html, body {
 h1{
 	display: flex;
 	justify-content: center;
+	color: white;
 }
 
+@media only screen and (min-width: 768px) and (max-width: 1250px){
+
+}
+
+@media only screen and (min-width: 1250px) and (max-width: 1950px){
+
+}
+
+@media only screen and (min-width: 1950px){
+
+}

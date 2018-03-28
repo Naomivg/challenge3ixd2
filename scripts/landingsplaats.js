@@ -1,7 +1,7 @@
 function initMap() {
   var uluru = {lat: 52.045968, lng: 4.335846};
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 15,
+    zoom: 10,
     center: uluru,
     styles: [
       //all over colors
@@ -118,6 +118,36 @@ function initMap() {
   });
 }
 
+function getApi(){
+  fetch('http://api.openweathermap.org/data/2.5/forecast?q=the%20Hague,nl&appid=3742188e4b08b08ad8ab95dace5f71d3')
+
+  // parse to JSON format
+  .then(function(response) {
+    return response.json();
+  })
+  
+  // render weather per day
+  .then(function(response) {
+
+    // show full JSON object
+    console.log(response.list);
+
+    for(var i = 0; i < response.list.length; i++) {
+      //console.log(response.list[i]);
+      //console.log(response.list[i].dt);
+      //console.log(response.list[i].dt_txt);
+      // etc.
+    }
+
+  })
+  
+  // catch error
+  .catch(function (error) {
+    console.error('Request failed', error);
+  });
+}
+
+getApi();
 /*function showDog(image){
   scaledSize: new google.maps.Size(20,32),
   origin: new.google.maps.Point(0,0),
