@@ -1,10 +1,10 @@
-function initMap() {
-  var uluru = {lat: 52.045968, lng: 4.335846};
+/*function initMap() {
+  var home = {lat: 52.045968, lng: 4.335846};
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
-    center: uluru,
+    center: home,
     styles: [
-      //all over colors
+ //all over colors
       {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
       {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
       {elementType: 'labels.text.fill', stylers: [{color: '#E8E241'}]},
@@ -85,13 +85,15 @@ function initMap() {
       }
     ]
   });
-  var marker = new google.maps.Marker({
+
+
+   var marker = new google.maps.Marker({
     position: uluru,
     map: map,
     title: 'Uluru (Ayers Rock)'
   });
   
-  var contentString = '<div id="content">'+
+  /*var contentString = '<div id="content">'+
   '<div id="siteNotice">'+
   '</div>'+
   '<h1 id="firstHeading" class="firstHeading">Havenstraat</h1>'+
@@ -108,18 +110,33 @@ function initMap() {
   'Heritage Site.</p>'+
   '</div>'+
   '</div>';
+                };
 
   var infowindow = new google.maps.InfoWindow({
     content: contentString
   });
 
+ 
   marker.addListener('click', function() {
     infowindow.open(map, marker);
   });
-}
+  var infowindow = new google.maps.InfoWindow();
+}*/
 
-function getApi(){
-  fetch('http://api.openweathermap.org/data/2.5/forecast?q=the%20Hague,nl&appid=3742188e4b08b08ad8ab95dace5f71d3')
+/**
+ * Fetch API data
+ */
+/*function getAPIdata() {
+  
+  var url = "http://api.openweathermap.org/data/2.5/forecast";
+  var apiKey ="3742188e4b08b08ad8ab95dace5f71d3";
+  var city = "the%20Hague";
+
+  // construct request
+  var request = url + "?" + "appid=" + apiKey + "&" + "q=" + city;
+  
+  // get weather forecast
+  fetch(request)
 
   // parse to JSON format
   .then(function(response) {
@@ -128,72 +145,86 @@ function getApi(){
   
   // render weather per day
   .then(function(response) {
-
-    // show full JSON object
     console.log(response.list);
-
-    for(var i = 0; i < response.list.length; i++) {
-      //console.log(response.list[i]);
-      //console.log(response.list[i].dt);
-      //console.log(response.list[i].dt_txt);
-      // etc.
-    }
-
+    // render weatherCondition
+    //onAPISucces();
   })
   
   // catch error
   .catch(function (error) {
+    // onAPIError();
     console.error('Request failed', error);
   });
 }
 
-getApi();
-/*function showDog(image){
-  scaledSize: new google.maps.Size(20,32),
-  origin: new.google.maps.Point(0,0),
-  url: image
 
-  var marker = new google.maps.Marker({
-          position: lat: 52.045968, lng: 4.335846,
-          map: map
-        },
-  icon: image,
-  map: myMap,
-  title: 'Uluru (Ayers Rock)'
-});
-}
+getAPIdata();*/
+
 
 function getAPIdata() {
 
-  // get latest weather
-  fetch('https://dog.ceo/api/breeds/image/random')
+  var url = "http://api.openweathermap.org/data/2.5/weather";
+  var apiKey ="3742188e4b08b08ad8ab95dace5f71d3";
+  var city = "the%20Hague,nl";
+
+  // construct request
+  var request = url + "?" + "appid=" + apiKey + "&" + "q=" + city;
+  
+  // get current weather
+  fetch(request)
   
   // parse to JSON format
   .then(function(response) {
     return response.json();
   })
   
-  showDog();
   // render weather per day
-  .then(function(response) {
-
-    // show full JSON object
-    console.log(response.i);
-    document.getElementById('dogs').src = response.message;
-    for(var i = 0; i < response.length; i++) {
-      //console.log(response.list[i]);
-      //console.log(response.list[i].dt);
-      //console.log(response.list[i].dt_txt);
-      // etc.
-    }
-
+  .then(function(jsonData) {
+    // render weatherCondition
+    console.log(initMap) 
   })
   
   // catch error
   .catch(function (error) {
-    console.error('Request failed', error);
+    onAPIError();
   });
 }
 
+function initMap() {
+    var positionLat = Number(jsonData.meta.geolocation.lat)
+    var positionLon = Number(jsonData.meta.geolocation.lon);
+    console.log(positionLat, positionLon);
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 5,
+      center: {
+        lat: positionLat,
+        lng: positionLon
+      }
+    });
+
+
+
+/*function onAPISucces(response) {
+  // get type of weather in string format
+  var type = response.weather[0].description;
+
+  // get temperature in Celcius
+  var degC = Math.floor(response.main.temp - 273.15);
+
+  // render weather in DOM
+  var weatherBox = document.getElementById('weather');
+  weatherBox.innerHTML = degC + "&#176;C <br>" + type;
+}*/
+
+
+function onAPIError() {
+  console.error('Request failed', error);
+  var weatherBox = document.getElementById('map');
+  weatherBox.className = 'hidden'; 
+}
+
+}
+
 // init data stream
-getAPIdata();*/
+
+
