@@ -43,8 +43,8 @@ function onAPISucces(response) {
 
 function onAPIError(error) {
 	console.error('Fetch request failed', error);
-	var weatherBox = document.getElementById('weather');
-	weatherBox.innerHTML = 'No weather data available <br /> Did you enter a valid city?'; 
+	var typeBox = document.getElementById('weather');
+	weatherBox.innerHTML = 'No weather data available'; 
 }
 
 // init data stream
